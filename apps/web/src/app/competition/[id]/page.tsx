@@ -4,11 +4,12 @@ import { useQuery } from "convex/react";
 import { api } from "@baguette-games/backend/convex/_generated/api";
 import { useParams } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 export default function CompetitionPage() {
   const params = useParams();
   const id = params.id as string;
-  const competition = useQuery(api.competitions.getCompetition, { id });
+  const competition = useQuery(api.competitions.getById, { id }); 
 
   if (!competition) {
     return (
@@ -19,17 +20,11 @@ export default function CompetitionPage() {
   }
 
   return (
-    <div className="container mx-auto max-w-3xl px-4 py-8">
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-2xl">{competition.name}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <p>Competition ID: {competition.id}</p>
-          </div>
-        </CardContent>
-      </Card>
+    <div className="">
+      <div className="flex justify-end">
+      <Button className="m-3 flex">Open Leaderboard</Button>
+      </div>
+      <h2 className="text-2xl flex justify-center">{competition.name.toUpperCase()}</h2>
     </div>
   );
 }

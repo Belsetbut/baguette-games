@@ -3,7 +3,7 @@ import { useQuery } from "convex/react";
 import { api } from "@baguette-games/backend/convex/_generated/api";
 
 export default function CompetitionList() {
-  const competitions = useQuery(api.competitions.getCompetitions);
+  const competitions = useQuery(api.competitions.list);
   return (
     <div className="grid gap-4 p-4">
       {competitions?.map((comp) => (
