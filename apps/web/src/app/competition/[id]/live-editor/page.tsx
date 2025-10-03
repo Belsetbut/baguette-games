@@ -18,7 +18,7 @@ export default function LiveEditorPage() {
   const activeAthlete = athletes?.find(athlete => athlete.isActive);
   
   const [newHeight, setNewHeight] = useState("");
-  const [timerDuration, setTimerDuration] = useState("");
+  const [timerDurationInput, setTimerDurationInput] = useState("");
   const [timeLeft, setTimeLeft] = useState(0);
   
   const setCurrentHeight = useMutation(api.competitions.setCurrentHeight);
@@ -35,7 +35,7 @@ export default function LiveEditorPage() {
     const interval = setInterval(() => {
       const now = Date.now();
       const endTime = competition.timerEndTime;
-      const remaining = Math.max(0, Math.floor((endTime - now) / 1000));
+      const remaining = endTime ? Math.max(0, Math.floor((endTime - now) / 1000)) : 0;
       
       setTimeLeft(remaining);
       
@@ -67,9 +67,9 @@ export default function LiveEditorPage() {
   };
 
   const handleSetTimerDuration = async () => {
-    if (!timerDuration || isNaN(Number(timerDuration))) return;
-    await setTimerDuration({ id, duration: Number(timerDuration) });
-    setTimerDuration("");
+    if (!timerDurationInput || isNaN(Number(timerDurationInput))) return;
+    await setTimerDuration({ id, duration: Number(timerDurationInput) });
+    setTimerDurationInput("");
   };
 
   const handleStartTimer = async () => {
@@ -147,8 +147,8 @@ export default function LiveEditorPage() {
               <Input 
                 type="number" 
                 placeholder="Duration (seconds)" 
-                value={timerDuration}
-                onChange={(e) => setTimerDuration(e.target.value)}
+                value={timerDurationInput}
+                onChange={(e) => setTimerDurationInput(e.target.value)}
               />
               <Button onClick={handleSetTimerDuration}>Set</Button>
             </div>

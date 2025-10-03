@@ -21,7 +21,7 @@ export default function LeaderboardPage() {
     const interval = setInterval(() => {
       const now = Date.now();
       const endTime = competition.timerEndTime;
-      const remaining = Math.max(0, Math.floor((endTime - now) / 1000));
+      const remaining = Math.max(0, Math.floor(((endTime ?? 0) - now) / 1000));
       
       setTimeLeft(remaining);
       
@@ -82,7 +82,7 @@ export default function LeaderboardPage() {
                   
                   {competition.currentHeight && (
                     <div className="flex justify-center gap-2 text-2xl">
-                      {getAttemptResults(activeAthlete, competition.currentHeight).map((result, index) => (
+                      {getAttemptResults(activeAthlete, competition.currentHeight).map((result: string, index: number) => (
                         <span key={index} className={`
                           w-10 h-10 flex items-center justify-center rounded-full
                           ${result === 'O' ? 'bg-green-600' : result === 'X' ? 'bg-red-600' : 'bg-gray-600'}
