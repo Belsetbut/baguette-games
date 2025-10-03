@@ -20,14 +20,14 @@ import { useState } from "react";
 export default function Dashboard() {
 	const [newCompetition, setNewCompetition] = useState("");
 
-	const competitions = useQuery(api.competitions.list);
 	const createCompetition = useMutation(api.competitions.create);
-	const user = useUser();
-	const privateData = useQuery(api.privateData.get);
 
 	   const handleSubmit = async () => {
+		 if (newCompetition.length === 0) {
+      return;
+    }
 		console.log("new competition: " + newCompetition)
-        await createCompetition({ name: newCompetition});
+        await createCompetition({ name: newCompetition, id: newCompetition.replace(/ /g, '') });
         setNewCompetition("");
     }
 

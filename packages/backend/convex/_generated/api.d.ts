@@ -13,6 +13,7 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
+import type * as athletes from "../athletes.js";
 import type * as competitions from "../competitions.js";
 import type * as healthCheck from "../healthCheck.js";
 import type * as privateData from "../privateData.js";
@@ -26,6 +27,7 @@ import type * as privateData from "../privateData.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  athletes: typeof athletes;
   competitions: typeof competitions;
   healthCheck: typeof healthCheck;
   privateData: typeof privateData;
