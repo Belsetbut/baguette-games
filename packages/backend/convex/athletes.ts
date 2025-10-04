@@ -154,3 +154,21 @@ export const getAthletesByCompetition = query({
     });
   },
 });
+
+export const clearActiveAthlete = mutation({
+  args: {
+    competitionId: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const athletes = await ctx.db
+      .query("athletes")
+      .filter(q => q.eq(q.field("competitionId"), args.competitionId))
+      .collect();
+    for (const athlete of athletes) {
+      if (athlete.isActive) {
+        await ctx.db.patch(athlete._id, { isActive: false });
+      }
+    }
+    return { success: true };
+  },
+});
